@@ -20,8 +20,6 @@ body, body * {
 
 	background-color: #CBCBCB;
 
-	/* border-radius: 20px; */
-
 	-webkit-box-shadow: 4px 4px 3px #2D2D2D;
 	   -moz-box-shadow: 4px 4px 3px #2D2D2D;
 	     -o-box-shadow: 4px 4px 3px #2D2D2D;
@@ -72,7 +70,7 @@ body, body * {
 }
 
 #disp-operations {
-	font-size: 14pt;
+	font-size: 13pt;
 	color: #888888;
 
 	-webkit-box-shadow: 1px 0 2px #5D5D5D inset;
@@ -139,21 +137,13 @@ body, body * {
 	background-color: #F1C40F;
 }
 
+#about {
+	background-color: #E74C3C;
+}
+
 .long-btn {
 	width: 136px;
 }
-
-/* @-webkit-keyframes buttonPulse {
-	from { background-color: #2D2D2D; }
-	50% { background-color: #BDC3C7; }
-	to { background-color: #2D2D2D; }
-}
-
-@keyframes buttonPulse {
-	from { background-color: #2D2D2D; }
-	50% { background-color: #BDC3C7; }
-	to { background-color: #2D2D2D; }
-} */
 
 .left {
 	float: left;
