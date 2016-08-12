@@ -27,17 +27,18 @@
 		// RPN (Reverse Polish Notation)
 		convertToRPN: () => {		   
 			// separate the operation string into tokens
-			let tokens = operationStr.split(/(\+|―|×|÷|-)/).
+			let tokens = operationStr.split(/(\+|―|×|÷|-)/)/*.
 				filter((token) => { // to prevent empty string occurring 
 									// because of split()
 					return token !== '';
-				});
+				});*/
+			console.log('tokens when splitted (not filtered yet) = ', tokens);
 
 			// convert the sequence of tokens into RPN
 			let rpn = tokens.reduce((acc, curr, index, array) => {
 				console.log('acc.stack = ', acc.stack);
 
-				if (!!Number(curr)) { // if current token is a number
+				if (curr >= '0' && curr <= '9') { // if current token is a number
 					acc.output += curr + ' '; // push the token into the output
 				} else { // if current token is an operator
 					
@@ -76,8 +77,9 @@
 		},
 		computeRPN: (rpn) => {
 			let tokens = rpn.split(' ');
+
 			let result = tokens.reduce((stack, curr, index, array) => {
-				if (!!Number(curr)) { // if current token is a number
+				if (!!Number(curr) || curr === '0') { // if current token is a number
 					stack.push(Number(curr));
 				} else { // if current token is an operator
 					if (stack.length < 2 && curr !== '-') {
@@ -148,13 +150,29 @@
 						tempValue = tempResult;
 					}
 					
+					// handling point operation
 					if (ch === '.') {
 						tempValue += (tempResult.length > 0) ? '' : ch;
 					} else {
 						tempValue = '';
 					}
 					
-					operationStr += ch;
+					// if nothing has been inserted in the calculator,
+					// and the operator is accidentally clicked,
+					// prepend the operation string with zero.					
+					if (tempValue.length === 0 && operationStr.length === 0) {
+						operationStr = '0' + ch;
+					} 
+					// if last character of the operation string is a number
+					// just append the operator character to it
+					else if (!!Number(operationStr[operationStr.length - 1]) || 
+							 operationStr[operationStr.length - 1] === '0') {
+						operationStr += ch;
+					} 
+					// in case the operators are clicked more than once
+					else {
+						operationStr = operationStr.substring(0, operationStr.length-1) + ch;
+					}
 				}
 			}
 
@@ -221,8 +239,13 @@
 	});
 
 	buttons.operations.subtract.addEventListener('click', (event) => {
-		if (tempValue.length === 0) display.updateOperation('-', false);
-		else display.updateOperation('―', false);
+		if (tempValue.length === 0 && 
+			(operationStr[operationStr.length - 1] >= '0' && 
+				operationStr[operationStr.length - 1] <= '9')) {
+			display.updateOperation('-', false);
+		} else {
+			display.updateOperation('―', false);
+		}
 	});
 
 	buttons.operations.multiply.addEventListener('click', (event) => {
@@ -235,7 +258,7 @@
 
 	buttons.operations.equal.addEventListener('click', (event) => {
 		let rpn = engine.convertToRPN();
-		console.log('rpn = ', rpn);
+		console.log('rpn = ', '"', rpn, '"');
 
 		let result = engine.computeRPN(rpn);
 		
