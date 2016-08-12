@@ -1,7 +1,4 @@
 # fcc-js-calculator
-=======
-
-> By: Baskoro Indrayana
 
 This is a project I recently built in FreeCodeCamp: "Build a JavaScript Calculator".
 
