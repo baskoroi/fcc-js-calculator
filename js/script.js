@@ -176,6 +176,11 @@
 		},
 	};
 
+	let modal = {
+		aboutModal: document.getElementById('about-modal'),
+		closeModalBtn: document.getElementsByClassName('close-modal')[0],
+	};
+
 	let buttons = {
 		control: {
 			ac: document.getElementById('ac'),
@@ -261,4 +266,18 @@
 		// reset current value back to 0
 		display.updateOperation('0', false);
 	});
+
+	buttons.control.about.addEventListener('click', (event) => {
+		modal.aboutModal.style.display = 'block';
+	});
+
+	modal.closeModalBtn.addEventListener('click', (event) => {
+		modal.aboutModal.style.display = 'none';
+	});
+
+	window.onclick = (event) => {
+		if (event.target === modal.aboutModal) {
+			modal.aboutModal.style.display = 'none';
+		}
+	};
 }());
