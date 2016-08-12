@@ -135,15 +135,25 @@
 				operationStr += '=' + ch;
 			} else {
 				if (ch >= '0' && ch <= '9') {
+					// if tempResult still exists
 					if (tempResult.length > 0) tempResult = '';
 
 					// prevent leading zeros from being displayed
 					tempValue += (ch === '0' && tempValue.length === 0) ? '' : ch;
 					operationStr += (ch === '0' && tempValue.length === 0) ? '' : ch;
 				} else {
-					if (tempResult.length > 0) operationStr = tempResult;
-
-					tempValue = '';
+					// if tempResult still exists
+					if (tempResult.length > 0) {
+						operationStr = tempResult;
+						tempValue = tempResult;
+					}
+					
+					if (ch === '.') {
+						tempValue += (tempResult.length > 0) ? '' : ch;
+					} else {
+						tempValue = '';
+					}
+					
 					operationStr += ch;
 				}
 			}
@@ -179,6 +189,7 @@
 			divide: document.getElementById('divide'),
 			percent: document.getElementById('percent'),
 			equal: document.getElementById('equal'),
+			point: document.getElementById('point'),
 		},
 		numbers: [
 			document.getElementById('zero'),
@@ -229,6 +240,10 @@
 		}
 
 		display.updateOperation(result, true);
+	});
+
+	buttons.operations.point.addEventListener('click', (event) => {
+		display.updateOperation('.', false);
 	});
 
 	buttons.control.ac.addEventListener('click', (event) => {
